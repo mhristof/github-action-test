@@ -24,5 +24,5 @@ if [[ -z $IMAGE_URL ]]; then
     die "Error, image url is not defined"
 fi
 
-echo "${{ inputs.image_url }}"
+echo "docker push $IMAGE_URL"
 exit 0
