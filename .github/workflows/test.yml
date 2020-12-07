@@ -1,0 +1,16 @@
+name: test
+
+on:
+  - push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - id: foo
+        uses: mhristof/github-action-test
+        with:
+          who-to-greet: 'Mona the Octocat'
+      
+
