@@ -1,10 +1,10 @@
-name: 'Hello World'
-description: 'Greet someone'
+name: 'Docker build'
+description: 'Build and push a docker image to a repository'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  image_url:
+    description: 'Docker image URL, for example "aws_account_id.dkr.ecr.region.amazonaws.com/my-web-app"'
     required: true
-    default: 'World'
+    # default: 'World'
 outputs:
   random-number: 
     description: "Random number"
@@ -12,10 +12,5 @@ outputs:
 runs:
   using: "composite"
   steps: 
-    - run: echo Hello ${{ inputs.who-to-greet }}.
-      shell: bash
-    - id: random-number-generator
-      run: echo "::set-output name=random-id::$(echo $RANDOM)"
-      shell: bash
-    - run: ${{ github.action_path }}/goodbye.sh
+    - run: ${{ github.action_path }}/build-and-push.sh
       shell: bash
