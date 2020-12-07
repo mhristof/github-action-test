@@ -4,17 +4,24 @@ inputs:
   image_url:
     description: 'Docker image URL, for example "aws_account_id.dkr.ecr.region.amazonaws.com/my-web-app"'
     required: true
-    # default: 'World'
   tags:
     description: 'Comma separated extra tags to push for this image'
     required: false
     default: 'latest'
+  login_cmd:
+    description: 'The login command for the Docker registry'
+    required: true
 outputs:
-  random-number: 
-    description: "Random number"
-    value: ${{ steps.random-number-generator.outputs.random-id }}
+  # github actions doenst support dynamic outputs, hence this duplication
+  image0:
+    description: "Image pushed"
+    value: ${{ steps.build.outputs.image0 }}
+  image1:
+    description: "Image pushed"
+    value: ${{ steps.build.outputs.image0 }}
 runs:
   using: "composite"
   steps: 
-    - run: ${{ github.action_path }}/build-and-push.sh "${{ inputs.image_url }}" "${{ inputs.tags }}"
+    - id: build
+      run: ${{ github.action_path }}/build-and-push.sh "${{ inputs.image_url }}" "${{ inputs.tags }}" "${{ inputs.login_cmd }}"
       shell: bash
