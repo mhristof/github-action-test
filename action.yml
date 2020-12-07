@@ -5,6 +5,10 @@ inputs:
     description: 'Docker image URL, for example "aws_account_id.dkr.ecr.region.amazonaws.com/my-web-app"'
     required: true
     # default: 'World'
+  tags:
+    description: 'Comma separated extra tags to push for this image'
+    required: false
+    default: 'latest'
 outputs:
   random-number: 
     description: "Random number"
@@ -12,5 +16,5 @@ outputs:
 runs:
   using: "composite"
   steps: 
-    - run: ${{ github.action_path }}/build-and-push.sh "${{ inputs.image_url }}"
+    - run: ${{ github.action_path }}/build-and-push.sh "${{ inputs.image_url }}" "${{ inputs.tags }}"
       shell: bash

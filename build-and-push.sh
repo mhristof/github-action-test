@@ -8,7 +8,7 @@ usage() {
 Build and push a docker image to a repository.
 
 Usage:
-    ./$0 IMAGE_URL
+    $0 IMAGE_URL
 
 EOF
 }
@@ -19,10 +19,17 @@ die() {
     exit 1;
 }
 IMAGE_URL=${1:-}
+TAGS=${2:-}
 
 if [[ -z $IMAGE_URL ]]; then
     die "Error, image url is not defined"
 fi
 
-echo "docker push $IMAGE_URL"
+docker build -t "$IMAGE_URL" .
+
+for tag in $(echo "$TAGS" | tr ',' "\n"); do
+    docker tag "$IMAGE_URL" "$IMAGE_URL:$tag"
+    docker push "$IMAGE_URL:$tag"
+done
+
 exit 0
