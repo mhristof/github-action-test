@@ -12,5 +12,5 @@ outputs:
 runs:
   using: "composite"
   steps: 
-    - run: ${{ github.action_path }}/build-and-push.sh
+    - run: ${{ github.action_path }}/build-and-push.sh "${{ inputs.image_url }}"
       shell: bash

@@ -3,5 +3,26 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+usage() {
+    cat << EOF
+Build and push a docker image to a repository.
+
+Usage:
+    ./$0 IMAGE_URL
+
+EOF
+}
+
+die() {
+    echo "$*" 1>&2;
+    usage
+    exit 1;
+}
+IMAGE_URL=${1:-}
+
+if [[ -z $IMAGE_URL ]]; then
+    die "Error, image url is not defined"
+fi
+
 echo "${{ inputs.image_url }}"
 exit 0
